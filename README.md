@@ -109,8 +109,3 @@ pip install PySide6 tqdm
 Feel free to fork and contribute! Whether it's UI improvement, render farm integration, or caching logic – contributions are welcome.
 
 ---
-
-## 📄 License
-
-MIT License – use freely, but attribution is appreciated!
-```
