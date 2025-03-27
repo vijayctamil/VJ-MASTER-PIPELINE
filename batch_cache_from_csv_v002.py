@@ -6,11 +6,6 @@ import os
 import time
 from tqdm import tqdm
 
-# # Set Houdini environment
-# houdini_path = r"C:\Program Files\Side Effects Software\Houdini 19.5.303\bin"
-# os.environ["PATH"] = houdini_path + ";" + os.environ["PATH"]
-
-# Check if running in the correct environment
 if "hython.exe" not in sys.executable:
     print("Error: Please run this script using Houdini's Python (hython.exe)")
     sys.exit(1)
@@ -63,12 +58,12 @@ def cache_file_nodes_sequential(filecache_paths):
 
 def wait_for_cache_completion(cache_node):
     """ Wait until the File Cache node finishes caching by checking if output files exist. """
-    file_path_parm = cache_node.parm("sopoutput")  # Get file path parameter
+    file_path_parm = cache_node.parm("sopoutput")
     if not file_path_parm:
         print(f"Error: 'file' parameter not found on {cache_node.path()}")
         return
 
-    file_path = file_path_parm.eval()  # Evaluate file path
+    file_path = file_path_parm.eval()
     file_extn_type = cache_node.parm("filetype").eval()
     if(file_extn_type == 0):
         file_extn = ".bgeo.sc"
@@ -85,36 +80,27 @@ def wait_for_cache_completion(cache_node):
     padded_end_frame = f'{end_frame:04}'
 
     first_frame_file = file_path + padded_start_frame + file_extn
-    # last_frame_file = file_path + padded_end_frame + file_extn
-
-    # print(f"Waiting for cache: {cache_node.path()}")
-    # print(f"Checking existence of: {last_frame_file}")
     print(f"Waiting for cache: {cache_node.path()} ({start_frame} → {end_frame})")
-
-    # Force tqdm to print immediately
     sys.stderr.flush()
-
-    # Live Progress bar
 
     with tqdm(total=total_frames, desc=f"Caching {cache_node.name()}", unit="frame", leave=True) as pbar:
         cached_frames = 0
-        previous_cached_frames = -1  # Track changes to avoid unnecessary updates
+        previous_cached_frames = -1
 
         while cached_frames < total_frames:
-            # Count valid cached frames (existing and non-zero size)
             cached_frames = sum(
                 os.path.exists(file_path + f'{f:04}' + file_extn) and
                 os.path.getsize(file_path + f'{f:04}' + file_extn) > 0 
                 for f in range(start_frame, end_frame + 1)
             )
             
-            if cached_frames != previous_cached_frames:  # Update progress only if there's a change
+            if cached_frames != previous_cached_frames:
                 pbar.n = cached_frames
                 pbar.refresh()
-                sys.stderr.flush()  # Flush output to show updates in real-time
+                sys.stderr.flush()
                 previous_cached_frames = cached_frames
 
-            time.sleep(0.5)  # Check every half second for faster updates
+            time.sleep(0.5)
 
 
 def cache_file_nodes_parallel(filecache_paths):
@@ -135,8 +121,6 @@ def cache_file_nodes_parallel(filecache_paths):
             thread.start()
         else:
             print(f"Error: 'Save to Disk' button not found on {cache_path}")
-
-    # Wait for all threads to finish
     for thread in threads:
         thread.join()
 
