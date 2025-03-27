@@ -1,6 +1,6 @@
 # 🎬 VJPipeline – VFX Pipeline Tool
 
-VJPipeline is a standalone desktop application (built with PySide6 and packaged via PyInstaller) designed to streamline and manage key parts of a VFX production pipeline. It currently supports batch file caching for Houdini scenes and offers a render management system for organizing shots and render layers within projects.
+VJPipeline is a standalone desktop application (built with PySide6 and packaged via PyInstaller) designed to streamline and manage key parts of a VFX production pipeline. It currently supports batch file caching for Houdini scenes and offers a render management system for organizing shots and render layers within projects. This is still under development, all the other tools in my repo will eventually be under this single roof.
 
 ---
 
