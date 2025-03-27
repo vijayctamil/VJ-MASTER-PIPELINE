@@ -12,7 +12,7 @@ def extract_filecaches(hip_file):
             if node.type().name() == "filecache" or "filecache" in node.type().name().lower():
                 filecache_nodes.append(node.path())
         
-        for node in hou.node("/stage").allSubChildren():  # Also check LOPs (Solaris)
+        for node in hou.node("/stage").allSubChildren():
             if node.type().name() == "filecache" or "filecache" in node.type().name().lower():
                 filecache_nodes.append(node.path())
         
