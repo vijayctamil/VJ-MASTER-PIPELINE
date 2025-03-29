@@ -4,8 +4,6 @@ VJPipeline is a standalone desktop application (built with PySide6 and packaged 
 
 ---
 
----
-
 ## 🎬 Watch Demo
 
 Check out the full demo on [Youtube](https://youtu.be/KGOs8D2e_fs).
